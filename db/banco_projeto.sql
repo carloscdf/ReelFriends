@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `banco_projeto`.`producao` (
   `idproducao` INT NOT NULL AUTO_INCREMENT,
   `titulo_producao` VARCHAR(50) NOT NULL,
   `diretor_producao` VARCHAR(45) NOT NULL,
+  `sinopse_producao` TEXT(500) NOT NULL,
   `genero_idgenero` INT NOT NULL,
   `categoria_idcategoria` INT NOT NULL,
   PRIMARY KEY (`idproducao`),
