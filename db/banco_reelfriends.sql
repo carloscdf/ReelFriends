@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`usuario` (
   `idusuario` INT NOT NULL AUTO_INCREMENT,
   `nome_usuario` VARCHAR(60) NOT NULL,
   `email_usuario` VARCHAR(50) NOT NULL,
-  `senha` VARCHAR(30) NOT NULL,
+  `senha_usuario` VARCHAR(130) NOT NULL,
   PRIMARY KEY (`idusuario`))
 ENGINE = InnoDB;
 
@@ -31,7 +31,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`genero` (
   `idgenero` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(30) NOT NULL,
+  `descricao_genero` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`idgenero`))
 ENGINE = InnoDB;
 
@@ -41,7 +41,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`categoria` (
   `idcategoria` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(30) NOT NULL,
+  `descricao_categoria` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`idcategoria`))
 ENGINE = InnoDB;
 
