@@ -1,0 +1,20 @@
+body{
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1, p{
+    text-align: center;
+}
+
+form{
+    max-width: 50rem;
+    text-align: center;
+}
+
+input{
+    display: block;
+    margin: 1rem auto;
+}
