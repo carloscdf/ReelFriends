@@ -1,5 +1,6 @@
 <?php 
-    include("../db/conexao.php");
+    include("../classes/MySQL.php");
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -23,23 +24,22 @@
 
             <button type="submit" name="enviar">Entrar</button>
 
-            <p>Não possui uma conta? Clique <a href="cadastro.php">aqui</a>!</p>
+            <p>Não possui uma conta? Clique <a href="cadastro_usuario.php">aqui</a>!</p>
         </fieldset>
     </form>
 
     <?php 
         if(isset($_POST["enviar"])){
-            $search = $_POST["email"];  //pesquisa o email inserido
-            $sql = "SELECT * FROM usuario WHERE email_usuario LIKE :s";
-            $stmt = $PDO->prepare($sql);    //prepara
-            $stmt->bindParam(':s', $search);    //vincula
-            $result = $stmt->execute();    //executa
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $sql = new MySQL;
+
+            $rows = $sql->pesquisaEmailUsuario($_POST["email"]); //pesquisa o email inserido
 
             if($rows != null){
                 $senha = hash("sha512", md5($_POST["senha"]));
 
                 if($rows[0]["senha_usuario"]==$senha){
+                    $_SESSION["usuario"] = $rows[0]["email_usuario"]; //salva o email do usuario na session
+
                     header("Location: feed.php");
 
                 } else {
