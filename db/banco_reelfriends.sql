@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`usuario` (
   `nome_usuario` VARCHAR(60) NOT NULL,
   `email_usuario` VARCHAR(50) NOT NULL,
   `senha_usuario` VARCHAR(130) NOT NULL,
+  `biografia_usuario` TEXT(350) NULL,
   PRIMARY KEY (`idusuario`))
 ENGINE = InnoDB;
 
@@ -47,18 +48,30 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `banco_reelfriends`.`diretor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`diretor` (
+  `iddiretor` INT NOT NULL AUTO_INCREMENT,
+  `nome_diretor` VARCHAR(60) NOT NULL,
+  `biografia_diretor` TEXT(350) NULL,
+  PRIMARY KEY (`iddiretor`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `banco_reelfriends`.`producao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`producao` (
   `idproducao` INT NOT NULL AUTO_INCREMENT,
   `titulo_producao` VARCHAR(50) NOT NULL,
-  `diretor_producao` VARCHAR(45) NOT NULL,
   `sinopse_producao` TEXT(500) NOT NULL,
   `genero_idgenero` INT NOT NULL,
   `categoria_idcategoria` INT NOT NULL,
+  `diretor_iddiretor` INT NOT NULL,
   PRIMARY KEY (`idproducao`),
   INDEX `fk_producao_genero1_idx` (`genero_idgenero` ASC),
   INDEX `fk_producao_categoria1_idx` (`categoria_idcategoria` ASC),
+  INDEX `fk_producao_diretor1_idx` (`diretor_iddiretor` ASC),
   CONSTRAINT `fk_producao_genero1`
     FOREIGN KEY (`genero_idgenero`)
     REFERENCES `banco_reelfriends`.`genero` (`idgenero`)
@@ -67,6 +80,11 @@ CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`producao` (
   CONSTRAINT `fk_producao_categoria1`
     FOREIGN KEY (`categoria_idcategoria`)
     REFERENCES `banco_reelfriends`.`categoria` (`idcategoria`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_producao_diretor1`
+    FOREIGN KEY (`diretor_iddiretor`)
+    REFERENCES `banco_reelfriends`.`diretor` (`iddiretor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

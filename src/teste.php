@@ -10,9 +10,14 @@
 </body>
 </html>
 <?php 
-    include("../classes/Usuario.php");
+    include("../classes/MySQL.php");
 
-    $usuario = new Usuario("teste@teste.com");
+    $sql = new MySQL;
 
-    $usuario->getPerfil();
+    
+    echo "<pre>";
+    print_r($rows);
+    echo "</pre>";
+
+    
 ?>

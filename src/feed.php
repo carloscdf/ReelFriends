@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="../style/feed.css">
 </head>
 <body>
+    <?php 
+        if(isset($_SESSION["usuario"])){
+    ?>
     <nav>
         <h2>ReelFriends</h2>
 
@@ -32,13 +35,8 @@
     <main>
         <menu>
             <ul>
-                <li><a href="">item</a></li>
-                <li><a href="">item</a></li>
-                <li><a href="">item</a></li>
-                <li><a href="">item</a></li>
-                <li><a href="">item</a></li>
-                <li><a href="">item</a></li>
-                <li><a href="">item</a></li>
+                <li><a href="">Filmes</a></li>
+                <li><a href="">Séries</a></li>
             </ul>
         </menu>
 
@@ -46,7 +44,7 @@
             <?php 
                 $sql = new MySQL;
 
-                $rows = $sql->pesquisaObras();
+                $rows = $sql->pesquisaProducoes();
 
                 if($rows == null){
                     echo "<h1>Ops...    :(</h1>";
@@ -57,6 +55,10 @@
 
         </section>
     </main>
-    
+    <?php 
+        } else{
+            header("Location: index.php");
+        }
+    ?>
 </body>
 </html>

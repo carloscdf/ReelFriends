@@ -15,7 +15,7 @@
             
             $this->email = $rows[0]["email_usuario"];
 
-            $this->perfil = "../img/perfil/".$rows[0]["nome_usuario"]."-".$rows[0]["idusuario"].".png";
+            $this->perfil = "../img/usuario/perfil/".$rows[0]["nome_usuario"]."-".$rows[0]["idusuario"].".png";
         }
 
         function getNome(){
@@ -29,7 +29,7 @@
         function getPerfil(){
             $fotos = glob($this->perfil);
             if($fotos == null){
-                echo "<img class = 'foto-perfil' src='../img/perfil/0.png' alt='".$this->username."'>";
+                echo "<img class = 'foto-perfil' src='../img/usuario/perfil/0.png' alt='".$this->username."'>";
             }
             else{
                 echo "<img class = 'foto-perfil' src='".$this->perfil."' alt='".$this->username."'>";

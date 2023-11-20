@@ -24,7 +24,7 @@
 
             <button type="submit" name="enviar">Entrar</button>
 
-            <p>Não possui uma conta? Clique <a href="cadastro_usuario.php">aqui</a>!</p>
+            <p>Não possui uma conta? Clique <a href="cadastro_usuarios.php">aqui</a>!</p>
         </fieldset>
     </form>
 
