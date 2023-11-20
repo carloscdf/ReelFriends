@@ -56,7 +56,7 @@
                         $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
 
                         ?>
-                        <a class="producao" href="producao.php?prod=<?php echo $item["idproducao"]?>">
+                        <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
                             <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
 
                             <div class="info">

@@ -1,0 +1,66 @@
+body{
+    margin: 0;
+}
+
+nav{
+    border-bottom: solid 1px black;
+    display: flex;
+    height: 10vh;
+}
+
+nav h2{
+    display: inline;  
+    padding: 0 1em;  
+}
+
+.pesquisa-container{
+    flex: 1;
+    margin: auto;
+    text-align: center;
+}
+
+input{
+    flex: 1;
+}
+
+.perfil{
+    margin: auto;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.foto-perfil{
+    margin: auto 0;
+    max-width: 2.5rem;
+    max-height: 2.5rem;
+    object-fit: cover;
+}
+
+main{
+    display: flex;
+    min-height: 90vh;
+}
+
+menu{
+    border-right: solid 1px black;
+    margin: 0;
+    padding-right: 1rem;
+}
+
+section{
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.filme-info{
+    display: flex;
+    flex-direction: column;
+    width: 25rem;
+}
+
+.bannerprod{
+    width: 100%;
+}

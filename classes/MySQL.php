@@ -69,6 +69,17 @@
             return $rows;
         }
 
+        function pesquisaIdProducao($id){
+            $search = $id;
+            $sql = "SELECT * FROM producao WHERE idproducao LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0];
+        }
+
         function verificaProducao($titulo, $diretor){
             $sql = "SELECT * FROM producao p WHERE p.diretor_iddiretor = $diretor ";
             $stmt = $this->PDO->prepare($sql);    //prepara
