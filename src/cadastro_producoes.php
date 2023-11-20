@@ -40,7 +40,7 @@
             <label for="categoria">Selecione a categoria da produção</label>
             <select name="categoria" id="categoria">
                 <?php // cria uma opção do o select para cada categoria
-                    $rows = $sql->pesquisaCategoria();
+                    $rows = $sql->pesquisaCategorias();
                     foreach($rows as $categoria){
                         echo "<option value='".$categoria["idcategoria"]."'>".$categoria["descricao_categoria"]."</option>";
                     }
@@ -52,8 +52,8 @@
 
             <label for="genero">Selecione o gênero da produção</label>
             <select name="genero" id="genero">
-                <?php // cria uma opção do o select para cada genero
-                    $rows = $sql->pesquisaGenero();
+                <?php // cria uma opção do o select para cada gênero
+                    $rows = $sql->pesquisaGeneros();
                     foreach($rows as $genero){
                         echo "<option value='".$genero["idgenero"]."'>".$genero["descricao_genero"]."</option>";
                     }
@@ -79,22 +79,24 @@
 
                 $arquivo = explode(".", $file["name"]);
 
-                if($arquivo[sizeof($arquivo)-1] != "jpg" && $arquivo[sizeof($arquivo)-1] != "png" ){
+                //verifica se o arquivo do upload é do tipo png ou jpg
+                if($arquivo[sizeof($arquivo)-1] != "png"){
                     die("Você não pode fazer upload desse tipo de arquivo");
                 } else {
                     $dir = "../img/producao/capa/";
 
-                    move_uploaded_file($file["tmp_name"], "$dir/".$_POST["titulo"]."-".$_POST["diretores"].".".$arquivo[sizeof($arquivo)-1]); //salva e renomeia o arquivo do upload
+                    move_uploaded_file($file["tmp_name"], "$dir/".$_POST["titulo"]."-".$_POST["diretores"].".png"); //salva e renomeia o arquivo do upload
 
-                    $sql->cadastraProducao($_POST["titulo"], $_POST["sinopse"], $_POST["genero"], $_POST["categoria"], $_POST["diretores"]);
+                    $sql->cadastraProducao($_POST["titulo"], $_POST["sinopse"], $_POST["genero"], $_POST["categoria"], $_POST["diretores"]); //cadastra o filme ou série no banco de dados
                 }
+
             } else {
                 $rows = $sql->pesquisaIdDiretor($_POST["diretores"]);
 
                 if($_POST["categoria"] == 1){
-                    echo "O filme ".$_POST["titulo"]." do diretor ".$rows[0]["nome_diretor"]." já está cadastrado";
+                    echo "O filme ".$_POST["titulo"]." do diretor ".$rows." já está cadastrado";
                 } else {
-                    echo "A série ".$_POST["titulo"]." do diretor ".$rows[0]["nome_diretor"]." já está cadastrado";
+                    echo "A série ".$_POST["titulo"]." do diretor ".$rows." já está cadastrado";
                 }
             }
         }

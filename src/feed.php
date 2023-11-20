@@ -1,7 +1,7 @@
 <?php 
     session_start();
     include("../classes/Usuario.php");
-
+    include("../classes/Producao.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,6 +49,23 @@
                 if($rows == null){
                     echo "<h1>Ops...    :(</h1>";
                     echo "<p>Parece que não há nenhuma produção cadastrada na plataforma. Clique no botão + para adicionar algum você mesmo</p>";
+                }
+
+                else{
+                    foreach($rows as $item){
+                        $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
+
+                        ?>
+                        <a class="producao" href="producao.php?prod=<?php echo $item["idproducao"]?>">
+                            <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
+
+                            <div class="info">
+                                <h2><?php echo $producao->getTitulo()?></h2>
+                                <p><?php echo $producao->getCategoria()." de ".$producao->getDiretor()?></p>
+                                <p><?php echo $producao->getSinopse()?></p>
+                            </div>
+                        </a>
+            <?php   }
                 }
             ?>
             <a href="cadastro_producoes.php">+</a>

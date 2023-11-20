@@ -37,8 +37,8 @@
             if($rows != null){
                 $senha = hash("sha512", md5($_POST["senha"]));
 
-                if($rows[0]["senha_usuario"]==$senha){
-                    $_SESSION["usuario"] = $rows[0]["email_usuario"]; //salva o email do usuario na session
+                if($rows["senha_usuario"]==$senha){
+                    $_SESSION["usuario"] = $rows["email_usuario"]; //salva o email do usuario na session
 
                     header("Location: feed.php");
 

@@ -24,7 +24,7 @@
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $rows;
+            return $rows[0];
         }
 
         function pesquisaNomeUsuario($username){
@@ -136,10 +136,10 @@
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $rows;
+            return $rows[0]["nome_diretor"];
         }
 
-        function pesquisaCategoria(){
+        function pesquisaCategorias(){
             $sql = "SELECT * FROM categoria";
             $stmt = $this->PDO->prepare($sql);    //prepara
             $result = $stmt->execute();    //executa
@@ -148,13 +148,35 @@
             return $rows;
         }
 
-        function pesquisaGenero(){
+        function pesquisaIdCategoria($id){
+            $search = $id;
+            $sql = "SELECT * FROM categoria WHERE idcategoria LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0]["descricao_categoria"];
+        }
+
+        function pesquisaGeneros(){
             $sql = "SELECT * FROM genero";
             $stmt = $this->PDO->prepare($sql);    //prepara
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $rows;
+        }
+
+        function pesquisaIdGenero($id){
+            $search = $id;
+            $sql = "SELECT * FROM genero WHERE idgenero LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0]["descricao_genero"];
         }
     }
 ?>

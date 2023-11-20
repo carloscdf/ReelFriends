@@ -11,11 +11,11 @@
 
             $rows = $sql->pesquisaEmailUsuario($email);
 
-            $this->username = $rows[0]["nome_usuario"];
+            $this->username = $rows["nome_usuario"];
             
-            $this->email = $rows[0]["email_usuario"];
+            $this->email = $rows["email_usuario"];
 
-            $this->perfil = "../img/usuario/perfil/".$rows[0]["nome_usuario"]."-".$rows[0]["idusuario"].".png";
+            $this->perfil = "../img/usuario/perfil/".$rows["nome_usuario"]."-".$rows["idusuario"].".png";
         }
 
         function getNome(){

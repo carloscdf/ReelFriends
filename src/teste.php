@@ -14,6 +14,7 @@
 
     $sql = new MySQL;
 
+    $rows = $sql->pesquisaIdGenero(1);
     
     echo "<pre>";
     print_r($rows);
