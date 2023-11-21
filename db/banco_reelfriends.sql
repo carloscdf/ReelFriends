@@ -183,3 +183,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO `categoria` (`idcategoria`, `descricao_categoria`) VALUES (NULL, 'Filme'), (NULL, 'Série');
+
+INSERT INTO `genero` (`idgenero`, `descricao_genero`) VALUES (NULL, 'Ação'), (NULL, 'Terror'), (NULL, 'Suspense'), (NULL, 'Drama'), (NULL, 'Comédia'), (NULL, 'Ficção Científica'), (NULL, 'Aventura');
