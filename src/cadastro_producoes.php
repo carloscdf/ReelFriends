@@ -37,6 +37,9 @@
 
             <textarea name="sinopse" id="sinopse" cols="30" rows="10" placeholder="Digite a sinopse da produção" required></textarea>
 
+            <label for="dtlancamento">Insira a data de lançamento da Produção</label>
+            <input type="date" name="dtlancamento" id="dtlancamento">
+
             <label for="categoria">Selecione a categoria da produção</label>
             <select name="categoria" id="categoria">
                 <?php // cria uma opção do o select para cada categoria
@@ -80,14 +83,14 @@
                 $arquivo = explode(".", $file["name"]);
 
                 //verifica se o arquivo do upload é do tipo png ou jpg
-                if($arquivo[sizeof($arquivo)-1] != "png"){
+                if($arquivo[sizeof($arquivo)-1] != "png" && $arquivo[sizeof($arquivo)-1] != "jpg"){
                     die("Você não pode fazer upload desse tipo de arquivo");
                 } else {
                     $dir = "../img/producao/capa/";
 
                     move_uploaded_file($file["tmp_name"], "$dir/".$_POST["titulo"]."-".$_POST["diretores"].".png"); //salva e renomeia o arquivo do upload
 
-                    $sql->cadastraProducao($_POST["titulo"], $_POST["sinopse"], $_POST["genero"], $_POST["categoria"], $_POST["diretores"]); //cadastra o filme ou série no banco de dados
+                    $sql->cadastraProducao($_POST["titulo"], $_POST["sinopse"], $_POST["dtlancamento"], $_POST["genero"], $_POST["categoria"], $_POST["diretores"]); //cadastra o filme ou série no banco de dados
                 }
 
             } else {

@@ -107,12 +107,13 @@
             }
         }
 
-        function cadastraProducao($titulo, $sinopse, $genero, $categoria, $diretor){
-            $sql = "INSERT into producao(titulo_producao, sinopse_producao, genero_idgenero, categoria_idcategoria, diretor_iddiretor) VALUES(:titulo, :sinopse, :genero, :categoria, :diretor)";
+        function cadastraProducao($titulo, $sinopse, $dtlancamento, $genero, $categoria, $diretor){
+            $sql = "INSERT into producao(titulo_producao, sinopse_producao, dt_lancamento_producao, genero_idgenero, categoria_idcategoria, diretor_iddiretor) VALUES(:titulo, :sinopse, :dtlancamento, :genero, :categoria, :diretor)";
 
             $stmt = $this->PDO->prepare($sql);    //prepara
             $stmt->bindParam(':titulo', $titulo);   //vincula
             $stmt->bindParam(':sinopse', $sinopse);     //vincula
+            $stmt->bindParam(':dtlancamento', $dtlancamento);     //vincula
             $stmt->bindParam(':genero', $genero);     //vincula
             $stmt->bindParam(':categoria', $categoria);     //vincula
             $stmt->bindParam(':diretor', $diretor);     //vincula
@@ -188,6 +189,44 @@
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $rows[0]["descricao_genero"];
+        }
+
+        function cadastraAvaliacao($userEmail, $idProducao, $nota){
+            $idusuario = $this->pesquisaEmailUsuario($userEmail)["idusuario"];
+
+            $sql = "INSERT into usuario_avalia_producao(usuario_idusuario, producao_idproducao, nota) VALUES(:usuario, :producao, :nota)";
+
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':usuario', $idusuario);   //vincula
+            $stmt->bindParam(':producao', $idProducao);     //vincula
+            $stmt->bindParam(':nota', $nota);     //vincula
+
+            $result = $stmt->execute();     //executa
+
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                echo "Avaliação registrada com sucesso";
+            }
+        }
+
+        function verificaAvaliacao($userEmail, $idProducao){
+            $idusuario = $this->pesquisaEmailUsuario($userEmail)["idusuario"];
+
+            $search = $idusuario;
+            $sql = "SELECT * FROM usuario_avalia_producao WHERE usuario_idusuario LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if($rows == null){
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 ?>

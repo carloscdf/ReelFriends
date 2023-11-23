@@ -53,7 +53,7 @@
 
                 else{
                     foreach($rows as $item){
-                        $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
+                        $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["dt_lancamento_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
 
                         ?>
                         <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
