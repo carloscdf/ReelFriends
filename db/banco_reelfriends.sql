@@ -141,7 +141,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`usuario_comenta_producao` (
   `usuario_idusuario` INT NOT NULL,
   `producao_idproducao` INT NOT NULL,
-  `comentario` VARCHAR(45) NOT NULL,
+  `comentario` TEXT(300) NOT NULL,
+  `data_hora_comentario` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`usuario_idusuario`, `producao_idproducao`),
   INDEX `fk_usuario_has_producao_producao2_idx` (`producao_idproducao` ASC),
   INDEX `fk_usuario_has_producao_usuario2_idx` (`usuario_idusuario` ASC),

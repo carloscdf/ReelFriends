@@ -11,7 +11,7 @@ if(isset($_SESSION["usuario"])){
 
     $rows = $sql->pesquisaIdProducao($_GET["prod"]);
 
-    $producao = new Producao($rows["titulo_producao"], $rows["sinopse_producao"], $rows["dt_lancamento_producao"], $rows["genero_idgenero"], $rows["categoria_idcategoria"], $rows["diretor_iddiretor"]);
+    $producao = new Producao($rows["titulo_producao"], $rows["sinopse_producao"], $rows["data_formatada"], $rows["genero_idgenero"], $rows["categoria_idcategoria"], $rows["diretor_iddiretor"]);
 ?>
 
 <!DOCTYPE html>
@@ -67,6 +67,16 @@ if(isset($_SESSION["usuario"])){
                     </div>
 
                     <div class="avaliacao">
+                        <h3>Nota média: <?php echo $producao->getNotaMedia()?></h3>
+
+                        <p>Numero de avaliações: <?php echo $sql->pesquisaNumeroAvaliacoes($_GET["prod"])?></p>
+
+                        <?php 
+                            if($sql->verificaAvaliacao($_SESSION["usuario"], $_GET["prod"])){
+                                echo "<p>Sua avaliação: ".$sql->pesquisaAvaliacaoUsuario($_SESSION["usuario"], $_GET["prod"])."</p>";
+                            }
+                        ?>
+
                         <form action="" method="post" enctype="multipart/form-data">
                             <div class="estrelas">
                                 <input type="radio" name="estrela" id="vazio" value="" checked>
@@ -93,11 +103,14 @@ if(isset($_SESSION["usuario"])){
                         <?php 
                             if(isset($_POST["enviar"])){
                                 if(!empty($_POST["estrela"])){
+
                                     if($sql->verificaAvaliacao($_SESSION["usuario"], $_GET["prod"])){
-                                        $sql->cadastraAvaliacao($_SESSION["usuario"], $_GET["prod"], $_POST["estrela"]);
+                                        $sql->atualizaAvaliacao($_SESSION["usuario"], $_GET["prod"], $_POST["estrela"]);
+                                        header("Location: pagina-producao.php?prod=".$_GET["prod"]);
                                     }
                                     else{
-                                        echo '"'.$producao->getTitulo().'" já foi avaliado por você';
+                                        $sql->cadastraAvaliacao($_SESSION["usuario"], $_GET["prod"], $_POST["estrela"]);
+                                        header("Location: pagina-producao.php?prod=".$_GET["prod"]);
                                     }
                                 } else {
                                     echo "Escolha ao menos uma estrela!";

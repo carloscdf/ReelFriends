@@ -24,7 +24,11 @@
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $rows[0];
+            if($rows == null){
+                return null;
+            } else {
+                return $rows[0];
+            }
         }
 
         function pesquisaNomeUsuario($username){
@@ -71,9 +75,22 @@
 
         function pesquisaIdProducao($id){
             $search = $id;
-            $sql = "SELECT * FROM producao WHERE idproducao LIKE :s";
+            $sql = "SELECT idproducao, titulo_producao, sinopse_producao, DATE_FORMAT(dt_lancamento_producao, '%d/%m/%Y') AS data_formatada, genero_idgenero, categoria_idcategoria, diretor_iddiretor FROM producao WHERE idproducao LIKE :s";
             $stmt = $this->PDO->prepare($sql);    //prepara
             $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0];
+        }
+
+        function pesquisaTituloProducao($titulo, $diretor){
+            $iddiretor = $this->pesquisaNomeDiretor($diretor)["iddiretor"];
+
+            $sql = "SELECT * FROM producao p WHERE p.titulo_producao = :t AND p.diretor_iddiretor = :d";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':t', $titulo);    //vincula
+            $stmt->bindParam(':d', $iddiretor);    //vincula
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -151,6 +168,16 @@
             return $rows[0]["nome_diretor"];
         }
 
+        function pesquisaNomeDiretor($nome){
+            $search = $nome;   
+            $sql = "SELECT * FROM diretor WHERE nome_diretor LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0];
+        }
         function pesquisaCategorias(){
             $sql = "SELECT * FROM categoria";
             $stmt = $this->PDO->prepare($sql);    //prepara
@@ -212,20 +239,74 @@
             }
         }
 
-        function verificaAvaliacao($userEmail, $idProducao){
-            $idusuario = $this->pesquisaEmailUsuario($userEmail)["idusuario"];
-
-            $search = $idusuario;
-            $sql = "SELECT * FROM usuario_avalia_producao WHERE usuario_idusuario LIKE :s";
+        function pesquisaAvaliacoes($idProducao){
+            $search = $idProducao;
+            $sql = "SELECT * FROM usuario_avalia_producao WHERE producao_idproducao LIKE :s";
             $stmt = $this->PDO->prepare($sql);    //prepara
             $stmt->bindParam(':s', $search);    //vincula
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            return $rows;
+        }
+
+        function pesquisaNumeroAvaliacoes($idProducao){
+            $search = $idProducao;
+            $sql = "SELECT COUNT(*) FROM usuario_avalia_producao WHERE producao_idproducao LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0]['COUNT(*)'];
+        }
+
+        function pesquisaAvaliacaoUsuario($userEmail, $idProducao){
+            $idusuario = $this->pesquisaEmailUsuario($userEmail)["idusuario"];
+
+            $sql = "SELECT * FROM usuario_avalia_producao WHERE usuario_idusuario = :u AND producao_idproducao LIKE :p";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':u', $idusuario);    //vincula
+            $stmt->bindParam(':p', $idProducao);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0]["nota"];
+        }
+
+        function atualizaAvaliacao($userEmail, $idProducao, $novaNota){
+            $idusuario = $this->pesquisaEmailUsuario($userEmail)["idusuario"];
+
+            $sql = "UPDATE banco_reelfriends.usuario_avalia_producao
+            SET nota = $novaNota
+            WHERE usuario_idusuario = $idusuario AND producao_idproducao = $idProducao";
+
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();    //executa
+
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                echo "Nota alterada para $novaNota estrelas!";
+            }
+        }
+
+        function verificaAvaliacao($userEmail, $idProducao){
+            $idusuario = $this->pesquisaEmailUsuario($userEmail)["idusuario"];
+
+            $sql = "SELECT * FROM usuario_avalia_producao WHERE usuario_idusuario LIKE :u AND producao_idproducao = :p";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':u', $idusuario);    //vincula
+            $stmt->bindParam(':p', $idProducao);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             if($rows == null){
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         }
     }

@@ -50,5 +50,27 @@
         function getCapa(){
             return $this->capa;
         }
+
+        function getNotaMedia(){
+            $somaNotas = 0;
+            $contador = 0;
+            $sql = new MySQL;
+            $id = $sql->pesquisaTituloProducao($this->titulo, $this->diretor)["idproducao"];
+            $rows = $sql->pesquisaAvaliacoes($id);
+
+            if($rows == null){
+                return 0;
+            }
+            else{
+                foreach($rows as $avaliacoes){
+                    $somaNotas += $avaliacoes["nota"];
+                    $contador++;
+                }
+
+                $notaMedia = $somaNotas/$contador;
+
+                return $notaMedia;
+            }
+        }
     }
 ?>
