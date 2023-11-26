@@ -2,6 +2,7 @@
 session_start();
 if(isset($_SESSION["usuario"])){
 
+    include("../classes/MySQL.php");
     include("../classes/Usuario.php");
     include("../classes/Producao.php");
     
@@ -27,7 +28,7 @@ if(isset($_SESSION["usuario"])){
 </head>
 <body>
     <nav>
-        <h2>ReelFriends</h2>
+        <h2><a href="feed.php">ReelFriends</a></h2>
 
         <div class="pesquisa-container">
             <input type="text" name="pesquisa" id="pesquisa">
@@ -96,7 +97,7 @@ if(isset($_SESSION["usuario"])){
                                 <label for="estrela_cinco"><i class="fa fa-star"></i></label>
                                 <input type="radio" name="estrela" id="estrela_cinco" value="5">
 
-                                <button type="submit" name="enviar">Cadastrar avaliação</button>
+                                <button name="enviar">Enviar avaliação</button>
                             </div>
                         </form>
 
@@ -116,6 +117,49 @@ if(isset($_SESSION["usuario"])){
                                     echo "Escolha ao menos uma estrela!";
                                 }
                             }
+                        ?>
+                    </div>
+                    <div class="comentarios">
+                        <form action="" method="post">
+                            <h3>Comentários</h3>
+                            <?php echo $usuario->getPerfil()?>
+                            <textarea name="comentario" id="sinopse" cols="45" rows="5" placeholder="Digite um comentário..." required></textarea>
+                            <button type="submit" name="comentar">Enviar</button>
+                        </form>
+
+                        <?php 
+                            if(isset($_POST["comentar"])){
+                                $sql->cadastraComentario($_SESSION["usuario"], $_GET["prod"], $_POST["comentario"]);
+                            }
+                        ?>
+
+                        <?php 
+                            $rows = $sql->pesquisaComentarios($_GET["prod"]);
+                            
+                            echo "<pre>";
+                            echo "</pre>";
+
+                            if($rows != null){
+                                foreach($rows as $comentarios){
+                                    $email = $sql->pesquisaIdUsuario($comentarios["usuario_idusuario"])[0]["email_usuario"];
+                                    $usuarioComentario = new Usuario($email);
+                                    ?>
+                                    <div class="comentario">
+                                        <div><?php echo $usuarioComentario->getNome()?></div>
+                                        <?php echo $usuarioComentario->getPerfil()?>
+                                        <p><?php echo $comentarios["conteudo_comentario"]?></p>
+                                    </div>
+                                <?php 
+                                }
+                            }
+                            else{
+                                if($producao->getCategoria() == "Filme"){
+                                    echo "<p>Esse filme ainda não possui comentários...</p>";
+                                    echo "<p>Seja o primeiro a comentar!</p>";
+                                }
+                            }
+
+                            
                         ?>
                     </div>
                 </div>

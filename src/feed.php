@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    include("../classes/MySQL.php");
     include("../classes/Usuario.php");
     include("../classes/Producao.php");
 ?>
@@ -17,7 +18,7 @@
         if(isset($_SESSION["usuario"])){
     ?>
     <nav>
-        <h2>ReelFriends</h2>
+        <h2><a href="feed.php">ReelFriends</a></h2>
 
         <div class="pesquisa-container">
             <input type="text" name="pesquisa" id="pesquisa">

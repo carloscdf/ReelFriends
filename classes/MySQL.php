@@ -42,6 +42,17 @@
             return $rows;
         }
 
+        function pesquisaIdUsuario($id){
+            $search = $id;   
+            $sql = "SELECT * FROM usuario WHERE idusuario LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
+        }
+
         function cadastraUsuario($username, $email, $senha){
             $sql = "INSERT into usuario(nome_usuario, email_usuario, senha_usuario) VALUES(:nome, :email, :senha)";
 
@@ -307,6 +318,38 @@
                 return false;
             } else {
                 return true;
+            }
+        }
+
+        function pesquisaComentarios($idProducao){
+            $search = $idProducao;
+            $sql = "SELECT * FROM comentario WHERE producao_idproducao LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
+        }
+
+        function cadastraComentario($userEmail, $idProducao, $comentario){
+            $idusuario = $this->pesquisaEmailUsuario($userEmail)["idusuario"];
+
+            $sql = "INSERT into comentario(usuario_idusuario, producao_idproducao, conteudo_comentario) VALUES(:usuario, :producao, :comentario)";
+
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':usuario', $idusuario);   //vincula
+            $stmt->bindParam(':producao', $idProducao);     //vincula
+            $stmt->bindParam(':comentario', $comentario);     //vincula
+
+            $result = $stmt->execute();     //executa
+
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                echo "Avaliação registrada com sucesso";
             }
         }
     }

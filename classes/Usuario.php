@@ -6,7 +6,6 @@
 
         function __construct($email)
         {
-            include("../classes/MySQL.php");
             $sql = new MySQL;
 
             $rows = $sql->pesquisaEmailUsuario($email);

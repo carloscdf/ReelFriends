@@ -136,30 +136,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `banco_reelfriends`.`usuario_comenta_producao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`usuario_comenta_producao` (
-  `usuario_idusuario` INT NOT NULL,
-  `producao_idproducao` INT NOT NULL,
-  `comentario` TEXT(300) NOT NULL,
-  `data_hora_comentario` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`usuario_idusuario`, `producao_idproducao`),
-  INDEX `fk_usuario_has_producao_producao2_idx` (`producao_idproducao` ASC),
-  INDEX `fk_usuario_has_producao_usuario2_idx` (`usuario_idusuario` ASC),
-  CONSTRAINT `fk_usuario_has_producao_usuario2`
-    FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `banco_reelfriends`.`usuario` (`idusuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuario_has_producao_producao2`
-    FOREIGN KEY (`producao_idproducao`)
-    REFERENCES `banco_reelfriends`.`producao` (`idproducao`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `banco_reelfriends`.`usuario_avalia_producao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`usuario_avalia_producao` (
@@ -175,6 +151,31 @@ CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`usuario_avalia_producao` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_usuario_has_producao_producao3`
+    FOREIGN KEY (`producao_idproducao`)
+    REFERENCES `banco_reelfriends`.`producao` (`idproducao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `banco_reelfriends`.`comentario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`comentario` (
+  `idcomentario` INT NOT NULL AUTO_INCREMENT,
+  `conteudo_comentario` TEXT(300) NOT NULL,
+  `data_hora_comentario` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_idusuario` INT NOT NULL,
+  `producao_idproducao` INT NOT NULL,
+  PRIMARY KEY (`idcomentario`),
+  INDEX `fk_comentario_usuario1_idx` (`usuario_idusuario` ASC),
+  INDEX `fk_comentario_producao1_idx` (`producao_idproducao` ASC),
+  CONSTRAINT `fk_comentario_usuario1`
+    FOREIGN KEY (`usuario_idusuario`)
+    REFERENCES `banco_reelfriends`.`usuario` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comentario_producao1`
     FOREIGN KEY (`producao_idproducao`)
     REFERENCES `banco_reelfriends`.`producao` (`idproducao`)
     ON DELETE NO ACTION
