@@ -99,3 +99,11 @@ button{
     align-items: center;
     gap: 1rem;
 }
+
+.perfil-comentario{
+    text-align: center;
+}
+
+.username-comentario{
+    display: block;
+}

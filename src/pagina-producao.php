@@ -145,9 +145,25 @@ if(isset($_SESSION["usuario"])){
                                     $usuarioComentario = new Usuario($email);
                                     ?>
                                     <div class="comentario">
-                                        <div><?php echo $usuarioComentario->getNome()?></div>
-                                        <?php echo $usuarioComentario->getPerfil()?>
+                                        <div class="perfil-comentario">
+                                            <span class="username-comentario"><?php echo $usuarioComentario->getNome()?></span>
+                                            <?php echo $usuarioComentario->getPerfil()?>        
+                                        </div>
+
                                         <p><?php echo $comentarios["conteudo_comentario"]?></p>
+                                    <?php 
+                                        if($usuarioComentario->getEmail() == $_SESSION["usuario"]){
+                                            echo '<a href="pagina-producao.php?prod='.$_GET["prod"].'&del='.$comentarios["idcomentario"].'"><i class="fa-solid fa-trash-can"></i></a>';
+
+                                            if(isset($_GET["del"])){
+                                                if($comentarios["idcomentario"] == $_GET["del"]){
+                                                    echo "Tem certeza que deeja apagar este comentário para sempre?";
+                                                    echo "<a href='apagar-comentario.php?id=".$comentarios["idcomentario"]."&prod=".$_GET["prod"]."'>Sim</a>";
+                                                    echo "<a href='pagina-producao.php?prod=".$_GET["prod"]."'>Não</a>";
+                                                }
+                                            }
+                                        }
+                                    ?>
                                     </div>
                                 <?php 
                                 }

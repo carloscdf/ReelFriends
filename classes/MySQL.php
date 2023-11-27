@@ -352,5 +352,19 @@
                 echo "Avaliação registrada com sucesso";
             }
         }
+
+        function apagarComentario($idComentario){
+            $sql = "DELETE FROM comentario WHERE idcomentario = $idComentario";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();     //executa
+            
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                echo "Comentário apagado com sucesso";
+            }
+        }
     }
 ?>
