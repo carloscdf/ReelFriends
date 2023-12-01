@@ -34,13 +34,13 @@ if(isset($_SESSION["usuario"])){
             <input type="text" name="pesquisa" id="pesquisa">
         </div>
 
-        <div class="perfil">
+        <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
             <?php
                 echo "<span>".$usuario->getNome()."</span>";
                 $usuario->getPerfil();
             ?>
 
-        </div>
+        </a>
     </nav>
     <main>
         <menu>
@@ -120,10 +120,10 @@ if(isset($_SESSION["usuario"])){
                         ?>
                     </div>
                     <div class="comentarios">
-                        <form action="" method="post">
+                        <form class="form-comentario" action="" method="post">
                             <h3>Comentários</h3>
                             <?php echo $usuario->getPerfil()?>
-                            <textarea name="comentario" id="sinopse" cols="45" rows="5" placeholder="Digite um comentário..." required></textarea>
+                            <textarea name="comentario" id="sinopse" cols="51" rows="5" placeholder="Digite um comentário..." required></textarea>
                             <button type="submit" name="comentar">Enviar</button>
                         </form>
 
@@ -153,11 +153,11 @@ if(isset($_SESSION["usuario"])){
                                         <p><?php echo $comentarios["conteudo_comentario"]?></p>
                                     <?php 
                                         if($usuarioComentario->getEmail() == $_SESSION["usuario"]){
-                                            echo '<a href="pagina-producao.php?prod='.$_GET["prod"].'&del='.$comentarios["idcomentario"].'"><i class="fa-solid fa-trash-can"></i></a>';
+                                            echo '<a class="apagar-comentario" href="pagina-producao.php?prod='.$_GET["prod"].'&del='.$comentarios["idcomentario"].'"><i class="fa-solid fa-trash-can"></i></a>';
 
                                             if(isset($_GET["del"])){
                                                 if($comentarios["idcomentario"] == $_GET["del"]){
-                                                    echo "Tem certeza que deeja apagar este comentário para sempre?";
+                                                    echo "Tem certeza que deseja apagar este comentário para sempre?";
                                                     echo "<a href='apagar-comentario.php?id=".$comentarios["idcomentario"]."&prod=".$_GET["prod"]."'>Sim</a>";
                                                     echo "<a href='pagina-producao.php?prod=".$_GET["prod"]."'>Não</a>";
                                                 }
@@ -190,6 +190,6 @@ if(isset($_SESSION["usuario"])){
 } else {
     header("Location: index.php");
 }
-    ?>
+?>
 </body>
 </html>

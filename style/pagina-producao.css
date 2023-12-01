@@ -31,6 +31,8 @@ input{
     display: flex;
     align-items: center;
     gap: 5px;
+    text-decoration: none;
+    color: black;
 }
 
 .foto-perfil{
@@ -94,6 +96,10 @@ button{
     border: solid 1px black;
 }
 
+textarea{
+    resize: none;
+}
+
 .comentario{
     display: flex;
     align-items: center;
@@ -106,4 +112,8 @@ button{
 
 .username-comentario{
     display: block;
+}
+
+.apagar-comentario{
+    color: red;
 }

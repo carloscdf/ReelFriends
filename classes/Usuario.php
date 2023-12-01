@@ -3,6 +3,7 @@
         private $username;
         private $email;
         private $perfil;
+        private $id;
 
         function __construct($email)
         {
@@ -15,6 +16,8 @@
             $this->email = $rows["email_usuario"];
 
             $this->perfil = "../img/usuario/perfil/".$rows["nome_usuario"]."-".$rows["idusuario"].".png";
+
+            $this->id = $rows["idusuario"];
         }
 
         function getNome(){
@@ -35,6 +38,8 @@
             }
         }
 
-
+        function getId(){
+            return $this->id;
+        }
     }
 ?>

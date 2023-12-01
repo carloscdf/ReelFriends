@@ -16,6 +16,7 @@
 <body>
     <?php 
         if(isset($_SESSION["usuario"])){
+            $usuario = new Usuario($_SESSION["usuario"]);
     ?>
     <nav>
         <h2><a href="feed.php">ReelFriends</a></h2>
@@ -24,14 +25,12 @@
             <input type="text" name="pesquisa" id="pesquisa">
         </div>
 
-        <div class="perfil">
+        <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
             <?php
-                $usuario = new Usuario($_SESSION["usuario"]);
                 echo "<span>".$usuario->getNome()."</span>";
                 $usuario->getPerfil();
             ?>
-
-        </div>
+        </a>
     </nav>
     <main>
         <menu>
