@@ -37,9 +37,8 @@ if(isset($_SESSION["usuario"])){
         <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
             <?php
                 echo "<span>".$usuario->getNome()."</span>";
-                $usuario->getPerfil();
             ?>
-
+            <img class = 'foto-perfil' src='<?php $usuario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
         </a>
     </nav>
     <main>
@@ -122,7 +121,7 @@ if(isset($_SESSION["usuario"])){
                     <div class="comentarios">
                         <form class="form-comentario" action="" method="post">
                             <h3>Comentários</h3>
-                            <?php echo $usuario->getPerfil()?>
+                            <img class = 'foto-perfil' src='<?php $usuario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
                             <textarea name="comentario" id="sinopse" cols="51" rows="5" placeholder="Digite um comentário..." required></textarea>
                             <button type="submit" name="comentar">Enviar</button>
                         </form>
@@ -141,13 +140,14 @@ if(isset($_SESSION["usuario"])){
 
                             if($rows != null){
                                 foreach($rows as $comentarios){
-                                    $email = $sql->pesquisaIdUsuario($comentarios["usuario_idusuario"])[0]["email_usuario"];
+                                    $email = $sql->pesquisaIdUsuario($comentarios["usuario_idusuario"])["email_usuario"];
                                     $usuarioComentario = new Usuario($email);
                                     ?>
                                     <div class="comentario">
                                         <div class="perfil-comentario">
                                             <span class="username-comentario"><?php echo $usuarioComentario->getNome()?></span>
-                                            <?php echo $usuarioComentario->getPerfil()?>        
+                                            <img class = 'foto-perfil' src='<?php $usuarioComentario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
+        
                                         </div>
 
                                         <p><?php echo $comentarios["conteudo_comentario"]?></p>

@@ -28,8 +28,8 @@
         <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
             <?php
                 echo "<span>".$usuario->getNome()."</span>";
-                $usuario->getPerfil();
             ?>
+            <img class = 'foto-perfil' src='<?php $usuario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
         </a>
     </nav>
     <main>

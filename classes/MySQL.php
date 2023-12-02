@@ -50,7 +50,7 @@
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $rows;
+            return $rows[0];
         }
 
         function cadastraUsuario($username, $email, $senha){
@@ -365,6 +365,73 @@
             else{
                 echo "Comentário apagado com sucesso";
             }
+        }
+
+        function cadastraSeguidor($idSeguidor, $idSeguido){
+            $sql = "INSERT into usuario_segue_usuario(usuario_idusuario, usuario_idusuario1) VALUES(:seguidor, :seguido)";
+
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':seguidor', $idSeguidor);   //vincula
+            $stmt->bindParam(':seguido', $idSeguido);     //vincula
+
+            $result = $stmt->execute();     //executa
+
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                header("Location: pagina-usuario.php?user=$idSeguido");
+            }
+        }
+
+        function apagarSeguimento($idSeguidor, $idSeguido){ //O nome ruim da função é só pra manter o padrão
+            $sql = "DELETE FROM usuario_segue_usuario WHERE usuario_idusuario = $idSeguidor AND usuario_idusuario1 = $idSeguido";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();     //executa
+            
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                header("Location: pagina-usuario.php?user=$idSeguido");
+            }
+        }
+
+        function verificaSeguidor($idSeguidor, $idSeguido){
+            $sql = "SELECT * FROM usuario_segue_usuario WHERE usuario_idusuario = $idSeguidor AND usuario_idusuario1 = $idSeguido";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if($rows == null){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function pesquisaNumeroSeguidores($idSeguido){
+            $search = $idSeguido;
+            $sql = "SELECT COUNT(*) FROM usuario_segue_usuario WHERE usuario_idusuario1 LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0]['COUNT(*)'];
+        }
+
+        function pesquisaNumeroSeguimentos($idSeguidor){
+            $search = $idSeguidor;
+            $sql = "SELECT COUNT(*) FROM usuario_segue_usuario WHERE usuario_idusuario LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows[0]['COUNT(*)'];
         }
     }
 ?>

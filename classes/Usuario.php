@@ -3,6 +3,7 @@
         private $username;
         private $email;
         private $perfil;
+        private $banner;
         private $id;
 
         function __construct($email)
@@ -16,6 +17,8 @@
             $this->email = $rows["email_usuario"];
 
             $this->perfil = "../img/usuario/perfil/".$rows["nome_usuario"]."-".$rows["idusuario"].".png";
+
+            $this->banner = "../img/usuario/banner/".$rows["nome_usuario"]."-".$rows["idusuario"].".png";
 
             $this->id = $rows["idusuario"];
         }
@@ -31,10 +34,20 @@
         function getPerfil(){
             $fotos = glob($this->perfil);
             if($fotos == null){
-                echo "<img class = 'foto-perfil' src='../img/usuario/perfil/0.png' alt='".$this->username."'>";
+                echo "../img/usuario/perfil/0.png";
             }
             else{
-                echo "<img class = 'foto-perfil' src='".$this->perfil."' alt='".$this->username."'>";
+                echo $this->perfil;
+            }
+        }
+
+        function getBanner(){
+            $fotos = glob($this->banner);
+            if($fotos == null){
+                echo "../img/usuario/banner/0.png";
+            }
+            else{
+                echo $this->banner;
             }
         }
 
