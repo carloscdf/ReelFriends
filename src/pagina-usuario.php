@@ -76,10 +76,10 @@ if(isset($_SESSION["usuario"])){
                                 <form action="" method="post">
                                 <?php 
                                     if($sql->verificaSeguidor($usuario->getId(), $_GET["user"])){
-                                        echo '<button name="follow">Seguir</button>';
+                                        echo '<button class="botao-acao" name="follow">Seguir</button>';
                                     }
                                     else{
-                                        echo '<button name="unfollow">Deixar de Seguir</button>';
+                                        echo '<button class="botao-acao" name="unfollow">Deixar de Seguir</button>';
                                     }
 
                                     if(isset($_POST["follow"])){
@@ -95,6 +95,35 @@ if(isset($_SESSION["usuario"])){
                         ?>
                         </div>
                 </div>    
+            </div>
+            
+            <h2>Favoritos</h2>
+            <div class="favoritos">
+                <?php 
+                    $rows = $sql->pesquisaFavoritos($usuarioVisitado->getId());
+
+                    if($rows != null){
+                        foreach($rows as $favorito){
+                            $item = $sql->pesquisaIdProducao($favorito["producao_idproducao"]);
+                            
+                            $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"],$item["data_formatada"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
+
+                            ?>
+                            <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
+                                <h2><?php echo $producao->getTitulo()?></h2>
+                                <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
+
+                            </a>
+                <?php   }
+
+                    } else {
+                        if($sql->pesquisaIdUsuario($_GET["user"]) == $sql->pesquisaEmailUsuario($_SESSION["usuario"])){
+                            echo "<p>Você ainda não possui nenhum filme ou série na sua lista de favoritos...</p>";
+                        } else {
+                            echo "<p>Esse usuário ainda não possui nenhum filme ou série na sua lista de favoritos...</p>";                            
+                        }
+                    }
+                ?>
             </div>
         </section>
     </main>    

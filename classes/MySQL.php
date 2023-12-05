@@ -424,14 +424,21 @@
         }
 
         function pesquisaNumeroSeguimentos($idSeguidor){
-            $search = $idSeguidor;
-            $sql = "SELECT COUNT(*) FROM usuario_segue_usuario WHERE usuario_idusuario LIKE :s";
+            $sql = "SELECT COUNT(*) FROM usuario_segue_usuario WHERE usuario_idusuario = $idSeguidor";
             $stmt = $this->PDO->prepare($sql);    //prepara
-            $stmt->bindParam(':s', $search);    //vincula
             $result = $stmt->execute();    //executa
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $rows[0]['COUNT(*)'];
+        }
+
+        function pesquisaFavoritos($idusuario){
+            $sql = "SELECT * FROM usuario_favorita_producao WHERE usuario_idusuario = $idusuario";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;            
         }
 
         function cadastraFavorito($idusuario, $idProducao){

@@ -54,9 +54,7 @@ menu{
 }
 
 section{
-    display: flex;
     padding: 1rem;
-    gap: 1rem;
 }
 
 .perfil-banner{
@@ -86,4 +84,13 @@ table, td, th{
     border-collapse: collapse;
 }
 
+.favoritos{
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
 
+.imgprod{
+    height: 10rem;
+    margin: auto 0;
+}
