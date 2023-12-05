@@ -433,5 +433,50 @@
 
             return $rows[0]['COUNT(*)'];
         }
+
+        function cadastraFavorito($idusuario, $idProducao){
+            $sql = "INSERT into usuario_favorita_producao(usuario_idusuario, producao_idproducao) VALUES(:usuario, :producao)";
+
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':usuario', $idusuario);   //vincula
+            $stmt->bindParam(':producao', $idProducao);     //vincula
+
+            $result = $stmt->execute();     //executa
+
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                header("Location: pagina-producao.php?prod=$idProducao");
+            }
+        }
+
+        function apagarFavorito($idusuario, $idProducao){
+            $sql = "DELETE FROM usuario_favorita_producao WHERE usuario_idusuario = $idusuario AND producao_idproducao = $idProducao";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();     //executa
+            
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                header("Location: pagina-producao.php?prod=$idProducao");
+            }
+        }
+
+        function verificaFavorito($idusuario, $idProducao){
+            $sql = "SELECT * FROM usuario_favorita_producao WHERE usuario_idusuario = $idusuario AND producao_idproducao = $idProducao";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if($rows == null){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 ?>

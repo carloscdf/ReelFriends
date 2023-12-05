@@ -64,6 +64,27 @@ if(isset($_SESSION["usuario"])){
                         <p>Lançado em: <?php echo $producao->getDtLancamento()?></p>
                         <p>Gênero: <?php echo $producao->getGenero()?></p>
                         <p><?php echo $producao->getCategoria()?></p>
+                        <form action="" method="post">
+                        <?php
+                            if($sql->verificaFavorito($usuario->getId(), $_GET["prod"])){
+                                echo '<button name="favoritar">Favoritar</button>';
+                            }
+                            else{
+                                echo '<button name="desfavoritar">Remover dos favoritos</button>';
+                            }
+                        ?>
+                            
+                        </form>
+                        
+                        <?php 
+                            if(isset($_POST["favoritar"])){
+                                $sql->cadastraFavorito($usuario->getId(), $_GET["prod"]);
+                            }
+
+                            if(isset($_POST["desfavoritar"])){
+                                $sql->apagarFavorito($usuario->getId(), $_GET["prod"]);
+                            }
+                        ?>
                     </div>
 
                     <div class="avaliacao">
@@ -144,11 +165,11 @@ if(isset($_SESSION["usuario"])){
                                     $usuarioComentario = new Usuario($email);
                                     ?>
                                     <div class="comentario">
-                                        <div class="perfil-comentario">
+                                        <a href="pagina-usuario.php?user=<?php echo $usuarioComentario->getId()?>" class="perfil-comentario">
                                             <span class="username-comentario"><?php echo $usuarioComentario->getNome()?></span>
                                             <img class = 'foto-perfil' src='<?php $usuarioComentario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
         
-                                        </div>
+                                        </a>
 
                                         <p><?php echo $comentarios["conteudo_comentario"]?></p>
                                     <?php 

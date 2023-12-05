@@ -70,16 +70,16 @@ if(isset($_SESSION["usuario"])){
                             
                         <?php 
                             if($sql->pesquisaIdUsuario($_GET["user"]) == $sql->pesquisaEmailUsuario($_SESSION["usuario"])){
-                                echo '<a class="botao-acao" href="personalizar-perfil">Personalizar Perfil</a>';
+                                echo '<a class="botao-acao" href="personalizar-perfil.php">Personalizar Perfil</a>';
                             }
                             else{?>
                                 <form action="" method="post">
                                 <?php 
                                     if($sql->verificaSeguidor($usuario->getId(), $_GET["user"])){
-                                        echo '<button type="submit" name="follow">Seguir</button>';
+                                        echo '<button name="follow">Seguir</button>';
                                     }
                                     else{
-                                        echo '<button type="submit" name="unfollow">Deixar de Seguir</button>';
+                                        echo '<button name="unfollow">Deixar de Seguir</button>';
                                     }
 
                                     if(isset($_POST["follow"])){
