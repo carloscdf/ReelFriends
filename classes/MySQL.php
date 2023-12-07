@@ -95,7 +95,19 @@
             return $rows[0];
         }
 
-        function pesquisaTituloProducao($titulo, $diretor){
+        function pesquisaTituloProducao($titulo){
+            $search = "%$titulo%";
+
+            $sql = "SELECT * FROM producao WHERE titulo_producao LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $search);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
+        }
+
+        function pesquisaTituloDiretorProducao($titulo, $diretor){
             $iddiretor = $this->pesquisaNomeDiretor($diretor)["iddiretor"];
 
             $sql = "SELECT * FROM producao p WHERE p.titulo_producao = :t AND p.diretor_iddiretor = :d";
@@ -365,6 +377,25 @@
             else{
                 echo "Comentário apagado com sucesso";
             }
+        }
+
+        function pesquisaSeguidores($idSeguido){
+            $search = $idSeguido;
+            $sql = "SELECT * FROM usuario_segue_usuario WHERE usuario_idusuario1 = $idSeguido";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
+        }
+
+        function pesquisaSeguimentos($idSeguidor){
+            $sql = "SELECT * FROM usuario_segue_usuario WHERE usuario_idusuario = $idSeguidor";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
         }
 
         function cadastraSeguidor($idSeguidor, $idSeguido){

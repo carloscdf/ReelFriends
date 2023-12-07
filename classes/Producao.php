@@ -55,7 +55,7 @@
             $somaNotas = 0;
             $contador = 0;
             $sql = new MySQL;
-            $id = $sql->pesquisaTituloProducao($this->titulo, $this->diretor)["idproducao"];
+            $id = $sql->pesquisaTituloDiretorProducao($this->titulo, $this->diretor)["idproducao"];
             $rows = $sql->pesquisaAvaliacoes($id);
 
             if($rows == null){

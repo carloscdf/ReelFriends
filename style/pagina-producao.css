@@ -21,6 +21,10 @@ nav h2 a{
     text-align: center;
 }
 
+.pesquisa-container button{
+    display: inline;
+}
+
 input{
     flex: 1;
 }

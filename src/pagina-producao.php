@@ -30,9 +30,16 @@ if(isset($_SESSION["usuario"])){
     <nav>
         <h2><a href="feed.php">ReelFriends</a></h2>
 
-        <div class="pesquisa-container">
+        <form method="post" class="pesquisa-container">
             <input type="text" name="pesquisa" id="pesquisa">
-        </div>
+            <button type="submit" name="pesquisar">Pesquisar</button>
+        </form>
+
+        <?php 
+            if(isset($_POST["pesquisar"])){
+                header("Location: feed.php?query=".$_POST["pesquisa"]);
+            }
+        ?>
 
         <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
             <?php
@@ -168,7 +175,6 @@ if(isset($_SESSION["usuario"])){
                                         <a href="pagina-usuario.php?user=<?php echo $usuarioComentario->getId()?>" class="perfil-comentario">
                                             <span class="username-comentario"><?php echo $usuarioComentario->getNome()?></span>
                                             <img class = 'foto-perfil' src='<?php $usuarioComentario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
-        
                                         </a>
 
                                         <p><?php echo $comentarios["conteudo_comentario"]?></p>

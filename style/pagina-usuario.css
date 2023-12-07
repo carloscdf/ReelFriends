@@ -84,6 +84,71 @@ table, td, th{
     border-collapse: collapse;
 }
 
+.seguidor{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: .5rem;
+    gap: 2rem;
+}
+
+.perfil-seguimento{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.modal {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all 0.4s;
+}
+   
+.modal:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal__content {
+    border-radius: 4px;
+    border: solid 1px black;
+    position: relative;
+    width: 500px;
+    max-width: 90%;
+    background: #fff;
+    padding: 1em 2em;
+  }
+   
+.modal__footer {
+    text-align: right;
+    margin-top: 50px;
+}
+   
+.modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #585858;
+    text-decoration: none;
+}
+   
+.modal__footer-btn-close {
+    width: 150px;
+    padding: 10px;
+    text-decoration: none;
+    background-color: #cfcca8;
+    color: #000000;
+    border-radius: 3px;
+}
+
 .favoritos{
     display: flex;
     gap: 1rem;

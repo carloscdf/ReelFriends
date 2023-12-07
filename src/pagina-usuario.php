@@ -22,12 +22,19 @@ if(isset($_SESSION["usuario"])){
     <link rel="stylesheet" href="../style/pagina-usuario.css">
 </head>
 <body>
-<nav>
+    <nav>
         <h2><a href="feed.php">ReelFriends</a></h2>
 
-        <div class="pesquisa-container">
+        <form method="post" class="pesquisa-container">
             <input type="text" name="pesquisa" id="pesquisa">
-        </div>
+            <button type="submit" name="pesquisar">Pesquisar</button>
+        </form>
+
+        <?php 
+            if(isset($_POST["pesquisar"])){
+                header("Location: feed.php?query=".$_POST["pesquisa"]);
+            }
+        ?>
 
         <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
             <?php
@@ -56,8 +63,8 @@ if(isset($_SESSION["usuario"])){
                     <div class="info">
                         <table>
                             <tr>
-                                <th>Seguidores</th>
-                                <th>Seguindo</th>
+                                <th><a href="#modal-seguidores">Seguidores</a></th>
+                                <th><a href="#modal-seguindo">Seguindo</a></th>
                             </tr>
                             <tr>
                                 <td><?php echo $sql->pesquisaNumeroSeguidores($usuarioVisitado->getId())?></td>
@@ -126,7 +133,63 @@ if(isset($_SESSION["usuario"])){
                 ?>
             </div>
         </section>
-    </main>    
+
+    </main> 
+    
+    <div id="modal-seguidores" class="modal">
+        <div class="modal__content">
+            <h1>Seguidores</h1>
+
+            <?php
+                $rows = $sql->pesquisaSeguidores($usuarioVisitado->getId()); 
+
+                foreach($rows as $item){
+                    $email = $sql->pesquisaIdUsuario($item["usuario_idusuario"])["email_usuario"];
+                    $seguidor = new Usuario($email);
+                    ?>
+                    <div class="seguidor">
+                        <a href="pagina-usuario.php?user=<?php echo $seguidor->getId()?>" class="perfil-seguimento">
+                            <img class = 'foto-perfil' src='<?php $seguidor->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
+                            <span class="username-seguimento"><?php echo $seguidor->getNome()?></span>
+                        </a>
+                    </div>
+            <?php }
+            ?>
+            <div class="modal__footer">
+            <a href="#" class="modal__footer-btn-close"> Fechar </a>
+            </div>
+        
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </div>
+
+    <div id="modal-seguindo" class="modal">
+        <div class="modal__content">
+            <h1>Seguindo</h1>
+
+            <?php
+                $rows = $sql->pesquisaSeguimentos($usuarioVisitado->getId()); 
+
+                foreach($rows as $item){
+                    $email = $sql->pesquisaIdUsuario($item["usuario_idusuario1"])["email_usuario"];
+                    $seguido = new Usuario($email);
+                    ?>
+                    <div class="seguido">
+                        <a href="pagina-usuario.php?user=<?php echo $seguido->getId()?>" class="perfil-seguimento">
+                            <img class = 'foto-perfil' src='<?php $seguido->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
+                            <span class="username-seguimento"><?php echo $seguido->getNome()?></span>
+                        </a>
+                    </div>
+            <?php }
+            ?>
+            <div class="modal__footer">
+            <a href="#" class="modal__footer-btn-close"> Fechar </a>
+            </div>
+        
+            <a href="#" class="modal__close">&times;</a>
+        </div>
+    </div>
+    
 <?php 
 } else {
     header("Location: index.php");
