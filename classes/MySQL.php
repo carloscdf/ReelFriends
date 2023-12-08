@@ -201,6 +201,40 @@
 
             return $rows[0];
         }
+
+        function verificaDiretor($nomeDiretor){
+            $sql = "SELECT * FROM diretor WHERE nome_diretor LIKE :s";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':s', $nomeDiretor);    //vincula
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if($rows == null){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function cadastraDiretor($nome, $biografia){
+            $sql = "INSERT into diretor(nome_diretor, biografia_diretor) VALUES(:nome, :biografia)";
+
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':nome', $nome);   //vincula
+            $stmt->bindParam(':biografia', $biografia);     //vincula
+
+            $result = $stmt->execute();     //executa
+
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                echo $stmt->rowCount()." linhas inseridas";
+                header("Location: cadastro_producoes.php");
+            }
+        }
+
         function pesquisaCategorias(){
             $sql = "SELECT * FROM categoria";
             $stmt = $this->PDO->prepare($sql);    //prepara
