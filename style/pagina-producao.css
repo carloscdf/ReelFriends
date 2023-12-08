@@ -79,6 +79,10 @@ section{
     gap: 1rem;
 }
 
+.descricao button{
+    margin: 1rem 0;
+}
+
 .estrelas input[type=radio]{
     display: none;
 }

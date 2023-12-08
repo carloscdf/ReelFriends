@@ -92,7 +92,31 @@ if(isset($_SESSION["usuario"])){
                                 $sql->apagarFavorito($usuario->getId(), $_GET["prod"]);
                             }
                         ?>
+
+                        <form action="" method="post">
+                        <?php
+                            if($sql->verificaAssistido($usuario->getId(), $_GET["prod"])){
+                                echo '<button name="cadastrarAssistido">Adicionar aos assistidos</button>';
+                            }
+                            else{
+                                echo '<button name="apagarAssistido">Remover dos assistidos</button>';
+                            }
+                        ?>
+                            
+                        </form>
+                        
+                        <?php 
+                            if(isset($_POST["cadastrarAssistido"])){
+                                $sql->cadastraAssistido($usuario->getId(), $_GET["prod"]);
+                            }
+
+                            if(isset($_POST["apagarAssistido"])){
+                                $sql->apagarAssistido($usuario->getId(), $_GET["prod"]);
+                            }
+                        ?>
                     </div>
+
+                    
 
                     <div class="avaliacao">
                         <h3>Nota média: <?php echo $producao->getNotaMedia()?></h3>
@@ -134,11 +158,11 @@ if(isset($_SESSION["usuario"])){
 
                                     if($sql->verificaAvaliacao($_SESSION["usuario"], $_GET["prod"])){
                                         $sql->atualizaAvaliacao($_SESSION["usuario"], $_GET["prod"], $_POST["estrela"]);
-                                        header("Location: pagina-producao.php?prod=".$_GET["prod"]);
+                                        echo '<script>window.location.href = window.location.href;</script>';
                                     }
                                     else{
                                         $sql->cadastraAvaliacao($_SESSION["usuario"], $_GET["prod"], $_POST["estrela"]);
-                                        header("Location: pagina-producao.php?prod=".$_GET["prod"]);
+                                        echo '<script>window.location.href = window.location.href;</script>';
                                     }
                                 } else {
                                     echo "Escolha ao menos uma estrela!";

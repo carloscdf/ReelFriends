@@ -100,7 +100,7 @@ if(isset($_SESSION["usuario"])){
                                 </form>
                           <?php }
                         ?>
-                        </div>
+                    </div>
                 </div>    
             </div>
             
@@ -132,6 +132,35 @@ if(isset($_SESSION["usuario"])){
                     }
                 ?>
             </div>
+
+            <h2>Assistidos</h2>
+            <div class="assistidos">
+                <?php 
+                    $rows = $sql->pesquisaAssistidos($usuarioVisitado->getId());
+
+                    if($rows != null){
+                        foreach($rows as $assistido){
+                            $item = $sql->pesquisaIdProducao($assistido["producao_idproducao"]);
+                            
+                            $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"],$item["data_formatada"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
+
+                            ?>
+                            <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
+                                <h2><?php echo $producao->getTitulo()?></h2>
+                                <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
+
+                            </a>
+                <?php   }
+
+                    } else {
+                        if($sql->pesquisaIdUsuario($_GET["user"]) == $sql->pesquisaEmailUsuario($_SESSION["usuario"])){
+                            echo "<p>Você ainda não possui nenhum filme ou série na sua lista de assistidos...</p>";
+                        } else {
+                            echo "<p>Esse usuário ainda não possui nenhum filme ou série na sua lista de assistidos...</p>";                            
+                        }
+                    }
+                ?>
+            </div>
         </section>
 
     </main> 
@@ -147,11 +176,40 @@ if(isset($_SESSION["usuario"])){
                     $email = $sql->pesquisaIdUsuario($item["usuario_idusuario"])["email_usuario"];
                     $seguidor = new Usuario($email);
                     ?>
-                    <div class="seguidor">
+                    <div class="seguimento">
                         <a href="pagina-usuario.php?user=<?php echo $seguidor->getId()?>" class="perfil-seguimento">
                             <img class = 'foto-perfil' src='<?php $seguidor->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
                             <span class="username-seguimento"><?php echo $seguidor->getNome()?></span>
                         </a>
+
+                        <div class="acao">
+                            
+                            <?php 
+                                if($sql->pesquisaIdUsuario($seguidor->getId()) == $sql->pesquisaEmailUsuario($_SESSION["usuario"])){
+                                    echo '<a class="botao-acao" href="personalizar-perfil.php">Personalizar Perfil</a>';
+                                }
+                                else{?>
+                                    <form action="" method="post">
+                                    <?php 
+                                        if($sql->verificaSeguidor($usuario->getId(), $seguidor->getId())){
+                                            echo '<button class="botao-acao" name="follow">Seguir</button>';
+                                        }
+                                        else{
+                                            echo '<button class="botao-acao" name="unfollow">Deixar de Seguir</button>';
+                                        }
+
+                                        if(isset($_POST["follow"])){
+                                            $sql->cadastraSeguidor($usuario->getId(), $seguidor->getId());
+                                        }
+
+                                        if(isset($_POST["unfollow"])){
+                                            $sql->apagarSeguimento($usuario->getId(), $seguidor->getId());
+                                        }
+                                    ?>
+                                    </form>
+                            <?php }
+                            ?>
+                        </div>
                     </div>
             <?php }
             ?>
@@ -174,11 +232,40 @@ if(isset($_SESSION["usuario"])){
                     $email = $sql->pesquisaIdUsuario($item["usuario_idusuario1"])["email_usuario"];
                     $seguido = new Usuario($email);
                     ?>
-                    <div class="seguido">
+                    <div class="seguimento">
                         <a href="pagina-usuario.php?user=<?php echo $seguido->getId()?>" class="perfil-seguimento">
                             <img class = 'foto-perfil' src='<?php $seguido->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
                             <span class="username-seguimento"><?php echo $seguido->getNome()?></span>
                         </a>
+
+                        <div class="acao">
+                            
+                            <?php 
+                                if($sql->pesquisaIdUsuario($seguido->getId()) == $sql->pesquisaEmailUsuario($_SESSION["usuario"])){
+                                    echo '<a class="botao-acao" href="personalizar-perfil.php">Personalizar Perfil</a>';
+                                }
+                                else{?>
+                                    <form action="" method="post">
+                                    <?php 
+                                        if($sql->verificaSeguidor($usuario->getId(), $seguido->getId())){
+                                            echo '<button class="botao-acao" name="follow">Seguir</button>';
+                                        }
+                                        else{
+                                            echo '<button class="botao-acao" name="unfollow">Deixar de Seguir</button>';
+                                        }
+
+                                        if(isset($_POST["follow"])){
+                                            $sql->cadastraSeguidor($usuario->getId(), $seguido->getId());
+                                        }
+
+                                        if(isset($_POST["unfollow"])){
+                                            $sql->apagarSeguimento($usuario->getId(), $seguido->getId());
+                                        }
+                                    ?>
+                                    </form>
+                            <?php }
+                            ?>
+                        </div>
                     </div>
             <?php }
             ?>

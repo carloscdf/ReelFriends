@@ -183,6 +183,28 @@ CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`comentario` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `banco_reelfriends`.`usuario_assiste_producao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `banco_reelfriends`.`usuario_assiste_producao` (
+  `usuario_idusuario` INT NOT NULL,
+  `producao_idproducao` INT NOT NULL,
+  PRIMARY KEY (`usuario_idusuario`, `producao_idproducao`),
+  INDEX `fk_usuario_has_producao_producao2_idx` (`producao_idproducao` ASC),
+  INDEX `fk_usuario_has_producao_usuario2_idx` (`usuario_idusuario` ASC),
+  CONSTRAINT `fk_usuario_has_producao_usuario2`
+    FOREIGN KEY (`usuario_idusuario`)
+    REFERENCES `banco_reelfriends`.`usuario` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_has_producao_producao2`
+    FOREIGN KEY (`producao_idproducao`)
+    REFERENCES `banco_reelfriends`.`producao` (`idproducao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

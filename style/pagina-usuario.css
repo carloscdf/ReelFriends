@@ -84,7 +84,7 @@ table, td, th{
     border-collapse: collapse;
 }
 
-.seguidor{
+.seguimento{
     display: flex;
     justify-content: space-between;
     align-items: center;
