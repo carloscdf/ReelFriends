@@ -125,6 +125,15 @@
             return $rows;
         }
 
+        function pesquisaCategoriaProducao($idCategoria){
+            $sql = "SELECT * FROM producao WHERE categoria_idcategoria = $idCategoria";
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $result = $stmt->execute();    //executa
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
+        }
+
         function pesquisaTituloDiretorProducao($titulo, $diretor){
             $iddiretor = $this->pesquisaNomeDiretor($diretor)["iddiretor"];
 

@@ -46,8 +46,8 @@ if(isset($_SESSION["usuario"])){
     <main>
         <menu>
             <ul>
-                <li><a href="">Filmes</a></li>
-                <li><a href="">Séries</a></li>
+                <li><a href="feed.php?filtro=1">Filmes</a></li>
+                <li><a href="feed.php?filtro=2">Séries</a></li>
             </ul>
         </menu>
 

@@ -42,8 +42,8 @@
     <main>
         <menu>
             <ul>
-                <li><a href="">Filmes</a></li>
-                <li><a href="">Séries</a></li>
+                <li><a href="feed.php?filtro=1">Filmes</a></li>
+                <li><a href="feed.php?filtro=2">Séries</a></li>
             </ul>
         </menu>
 
@@ -51,53 +51,85 @@
             <?php 
                 $sql = new MySQL;
 
-                if(isset($_GET["query"])){
-                    $rows = $sql->pesquisaTituloProducao($_GET["query"]);
+                if(isset($_GET["filtro"])){
+                    $rows = $sql->pesquisaCategoriaProducao($_GET["filtro"]);
+    
+                        if($rows == null && $_GET["filtro"] == 1){
+                            echo "<h1>Ops...    :(</h1>";
+                            echo "<p>Parece que não há nenhum filme cadastrado na plataforma. Clique no botão + para adicionar algum você mesmo</p>";
+                        }
 
-                    if($rows == null){
-                        echo "<h1>Ops...    :(</h1>";
-                        echo "<p>Parece que não há nenhuma produção cadastrada na plataforma que se parece com a sua pesquisa. Clique no botão + para adicionar algum você mesmo</p>";
-                    }
-
-                    else{
-                        foreach($rows as $item){
-                            $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["dt_lancamento_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
-
-                            ?>
-                            <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
-                                <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
-
-                                <div class="info">
-                                    <h2><?php echo $producao->getTitulo()?></h2>
-                                    <p><?php echo $producao->getCategoria()." de ".$producao->getDiretor()?></p>
-                                    <p><?php echo $producao->getSinopse()?></p>
-                                </div>
-                            </a>
-                <?php   }
-                    }
+                        else if($rows == null && $_GET["filtro"] == 2){
+                            echo "<h1>Ops...    :(</h1>";
+                            echo "<p>Parece que não há nenhuma série cadastrada na plataforma. Clique no botão + para adicionar algum você mesmo</p>";
+                        }
+    
+                        else{
+                            foreach($rows as $item){
+                                $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["dt_lancamento_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
+    
+                                ?>
+                                <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
+                                    <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
+    
+                                    <div class="info">
+                                        <h2><?php echo $producao->getTitulo()?></h2>
+                                        <p><?php echo $producao->getCategoria()." de ".$producao->getDiretor()?></p>
+                                        <p><?php echo $producao->getSinopse()?></p>
+                                    </div>
+                                </a>
+                    <?php
+                            }
+                        }
                 } else {
-                    $rows = $sql->pesquisaProducoes();
-
-                    if($rows == null){
-                        echo "<h1>Ops...    :(</h1>";
-                        echo "<p>Parece que não há nenhuma produção cadastrada na plataforma. Clique no botão + para adicionar algum você mesmo</p>";
-                    }
-
-                    else{
-                        foreach($rows as $item){
-                            $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["dt_lancamento_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
-
-                            ?>
-                            <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
-                                <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
-
-                                <div class="info">
-                                    <h2><?php echo $producao->getTitulo()?></h2>
-                                    <p><?php echo $producao->getCategoria()." de ".$producao->getDiretor()?></p>
-                                    <p><?php echo $producao->getSinopse()?></p>
-                                </div>
-                            </a>
-                <?php   }
+                    if(isset($_GET["query"])){
+                        $rows = $sql->pesquisaTituloProducao($_GET["query"]);
+    
+                        if($rows == null){
+                            echo "<h1>Ops...    :(</h1>";
+                            echo "<p>Parece que não há nenhuma produção cadastrada na plataforma que se parece com a sua pesquisa. Clique no botão + para adicionar algum você mesmo</p>";
+                        }
+    
+                        else{
+                            foreach($rows as $item){
+                                $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["dt_lancamento_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
+    
+                                ?>
+                                <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
+                                    <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
+    
+                                    <div class="info">
+                                        <h2><?php echo $producao->getTitulo()?></h2>
+                                        <p><?php echo $producao->getCategoria()." de ".$producao->getDiretor()?></p>
+                                        <p><?php echo $producao->getSinopse()?></p>
+                                    </div>
+                                </a>
+                    <?php   }
+                        }
+                    } else {
+                        $rows = $sql->pesquisaProducoes();
+    
+                        if($rows == null){
+                            echo "<h1>Ops...    :(</h1>";
+                            echo "<p>Parece que não há nenhuma produção cadastrada na plataforma. Clique no botão + para adicionar algum você mesmo</p>";
+                        }
+    
+                        else{
+                            foreach($rows as $item){
+                                $producao = new Producao($item["titulo_producao"], $item["sinopse_producao"], $item["dt_lancamento_producao"], $item["genero_idgenero"], $item["categoria_idcategoria"], $item["diretor_iddiretor"]);
+    
+                                ?>
+                                <a class="producao" href="pagina-producao.php?prod=<?php echo $item["idproducao"]?>">
+                                    <img class="imgprod" src="<?php echo $producao->getCapa()?>" alt="<?php echo $producao->getTitulo()?>">
+    
+                                    <div class="info">
+                                        <h2><?php echo $producao->getTitulo()?></h2>
+                                        <p><?php echo $producao->getCategoria()." de ".$producao->getDiretor()?></p>
+                                        <p><?php echo $producao->getSinopse()?></p>
+                                    </div>
+                                </a>
+                    <?php   }
+                        }
                     }
                 }
             ?>
