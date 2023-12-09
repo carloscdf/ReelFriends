@@ -30,7 +30,7 @@ if (isset($_SESSION["usuario"])) {
     </head>
 
     <body>
-        <header>
+    <header>
             <div class="header">
                 <h2><a href="feed.php">ReelFriends</a></h2>
                 <a href="pagina-usuario.php?user=<?php echo $usuario->getId() ?>" class="perfil">
@@ -55,21 +55,14 @@ if (isset($_SESSION["usuario"])) {
                 header("Location: feed.php?query=".$_POST["pesquisa"]);
             }
         ?>
+                <p class="categories">Categorias</p>
+                <a href="">Filmes</a>
+                <a href="">Séries</a>
+            </menu>
+            </div>
 
-        <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
-            <?php
-                echo "<span>".$usuario->getNome()."</span>";
-            ?>
-            <img class = 'foto-perfil' src='<?php $usuario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
-        </a>
-    </nav>
-    <main>
-        <menu>
-            <ul>
-                <li><a href="">Filmes</a></li>
-                <li><a href="">Séries</a></li>
-            </ul>
-        </menu>
+        
+        <main>
 
             <section>
                 <div class="filme-info">
@@ -263,5 +256,6 @@ if (isset($_SESSION["usuario"])) {
 }
     ?>
     </body>
+
 
     </html>

@@ -55,14 +55,8 @@ if(isset($_SESSION["usuario"])){
             </menu>
             </div>
 
-    <main>
-        <menu>
-            <ul>
-                <li><a href="">Filmes</a></li>
-                <li><a href="">Séries</a></li>
-            </ul>
-        </menu>
 
+    <main>
         <section>
             <div class="perfil-banner">
                 <img class = 'foto-banner' src='<?php $usuarioVisitado->getBanner()?>' alt='".$this->username."'>
