@@ -1,8 +1,10 @@
-<?php 
-    include("../db/conexao.php");
+<?php
+include("../classes/MySQL.php");
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,46 +12,52 @@
 
     <link rel="stylesheet" href="../style/index.css">
 </head>
+
 <body>
-    <h1>ReelFriends</h1>
 
-    <form action="" method="post">
-        <fieldset>
-            <h2>Login</h2>
-       
-            <input type="email" name="email" id="email" placeholder="Digite seu email..." required>
+    <div class="main">
+        <div class="logo">
+            <h1>ReelFriends</h1>
+        </div>
 
-            <input type="password" name="senha" id="senha" placeholder="Digite sua senha..." required>
+    <div class="login-form">
+        <form action="" method="post">
+            <fieldset>
+                <h2>Login</h2>
 
-            <button type="submit" name="enviar">Entrar</button>
+                <input type="email" name="email" id="email" placeholder="Digite seu email..." required>
 
-            <p>Não possui uma conta? Clique <a href="cadastro.php">aqui</a>!</p>
-        </fieldset>
-    </form>
+                <input type="password" name="senha" id="senha" placeholder="Digite sua senha..." required>
 
-    <?php 
-        if(isset($_POST["enviar"])){
-            $search = $_POST["email"];  //pesquisa o email inserido
-            $sql = "SELECT * FROM usuario WHERE email_usuario LIKE :s";
-            $stmt = $PDO->prepare($sql);    //prepara
-            $stmt->bindParam(':s', $search);    //vincula
-            $result = $stmt->execute();    //executa
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                <button type="submit" name="enviar">Entrar</button>
 
-            if($rows != null){
+                <p>Não possui uma conta? Clique <a href="cadastro_usuarios.php">aqui</a>!</p>
+            </fieldset>
+        </form>
+
+        <?php
+        if (isset($_POST["enviar"])) {
+            $sql = new MySQL;
+
+            $rows = $sql->pesquisaEmailUsuario($_POST["email"]); //pesquisa o email inserido
+
+            if ($rows != null) {
                 $senha = hash("sha512", md5($_POST["senha"]));
 
-                if($rows[0]["senha_usuario"]==$senha){
-                    header("Location: feed.php");
+                if ($rows["senha_usuario"] == $senha) {
+                    $_SESSION["usuario"] = $rows["email_usuario"]; //salva o email do usuario na session
 
+                    header("Location: feed.php");
                 } else {
                     echo "[ERRO] Senha incorreta";
                 }
-
             } else {
                 echo "[ERRO] O e-mail não está cadastrado no sistema";
             }
         }
-    ?>
+        ?>
+        </div>
+    </div>
 </body>
+
 </html>
