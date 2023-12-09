@@ -15,14 +15,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalize seu perfil!</title>
 
-    <link rel="stylesheet" href="../style/personalizar-perfil.css">
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/cadastro_producoes.css">
 </head>
 <body>
-    <nav>
-        <h2><a href="feed.php">ReelFriends</a></h2>
+<header>
+            <div class="header">
+                <h2><a href="feed.php">ReelFriends</a></h2>
+                <a href="pagina-usuario.php?user=<?php echo $usuario->getId() ?>" class="perfil">
+                    <?php
+                    echo "<span>" . $usuario->getNome() . "</span>";
+                    ?>
+                    <img class='foto-perfil' src='<?php $usuario->getPerfil() ?>' alt='".<?php $usuario->getNome() ?>."'>
+                </a>
+            </div>
+        </header>
 
-        <form method="post" class="pesquisa-container">
-            <input type="text" name="pesquisa" id="pesquisa">
+        <div class="box-container">
+            <div class="side-bar-box">
+            <menu class="sidebar">
+            <form class="search-area" method="post" class="pesquisa-container">
+            <input id="search-area" type="text" name="pesquisa" id="pesquisa" placeholder="Digitar...">
             <button type="submit" name="pesquisar">Pesquisar</button>
         </form>
 
@@ -31,37 +44,24 @@
                 header("Location: feed.php?query=".$_POST["pesquisa"]);
             }
         ?>
+                <p class="categories">Categorias</p>
+                <a href="">Filmes</a>
+                <a href="">Séries</a>
+            </menu>
+            </div>
 
-        <a href="pagina-usuario.php?user=<?php echo $usuario->getId()?>" class="perfil">
-            <?php
-                echo "<span>".$usuario->getNome()."</span>";
-            ?>
-            <img class = 'foto-perfil' src='<?php $usuario->getPerfil()?>' alt='".<?php $usuario->getNome()?>."'>
-        </a>
-    </nav>
-
+        
     <main>
         <form action="" method="post">
             <fieldset>
-                <h2>Biografia</h2>
-            
-                <textarea name="biografia" id="biografia" cols="30" rows="10" placeholder="Digite uma pequena biografia para o seu perfil" required></textarea>
-
-                <button name="alterarBiografia">Alterar Biografia</button>
-            </fieldset>
+                <h2>Personalizar Perfil</h2>
         </form>
 
-        <?php 
-            if(isset($_POST["alterarBiografia"])){
-                $sql->atualizaBioUsuario($usuario->getId(), $_POST["biografia"]);
-            }
-        ?>
 
         <form action="" method="post" enctype="multipart/form-data">
             <fieldset>
-                <h2>Foto de perfil</h2>
-            
-                <label for="perfil">Selecione sua nova foto de perfil</label>
+                <p for="perfil">Selecione sua nova foto de perfil</p>
+                <br>
                 <input type="file" name="perfil" id="perfil" required>
 
                 <button name="alterarPerfil">Alterar Foto de Perfil</button>
@@ -90,12 +90,10 @@
 
         <form action="" method="post" enctype="multipart/form-data">
             <fieldset>
-                <h2>Banner do Usuário</h2>
-            
-                <label for="banner">Selecione sua nova foto de perfil</label>
+                <label for="banner">Selecione sua nova foto de Capa</label>
                 <input type="file" name="banner" id="banner" required>
 
-                <button name="alterarBanner">Alterar Foto de Perfil</button>
+                <button name="alterarBanner">Alterar Foto de Capa</button>
             </fieldset>
         </form>
 

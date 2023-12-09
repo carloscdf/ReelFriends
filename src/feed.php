@@ -63,7 +63,7 @@ include("../classes/Producao.php");
                         $rows = $sql->pesquisaTituloProducao($_GET["query"]);
 
                         if ($rows == null) {
-                            echo "<h1>Ops...    :(</h1>";
+                            echo "<h1>Ops...    :(</h1><br><br>";
                             echo "<p>Parece que não há nenhuma produção cadastrada na plataforma que se parece com a sua pesquisa. Clique no botão + para adicionar algum você mesmo</p>";
                         } else {
                             foreach ($rows as $item) {
@@ -84,7 +84,7 @@ include("../classes/Producao.php");
                         $rows = $sql->pesquisaProducoes();
 
                         if ($rows == null) {
-                            echo "<h1>Ops...    :(</h1>";
+                            echo "<h1>Ops...    :(</h1><br><br>";
                             echo "<p>Parece que não há nenhuma produção cadastrada na plataforma. Clique no botão + para adicionar algum você mesmo</p>";
                         } else {
                             foreach ($rows as $item) {

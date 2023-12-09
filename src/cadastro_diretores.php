@@ -12,17 +12,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastre uma novo diretor</title>
 
-    <link rel="stylesheet" href="../style/cadastro_diretores.css">
+    <link rel="stylesheet" href="../style/cadastro_producoes.css">
+    <link rel="stylesheet" href="../style/main.css">
 </head>
 <body>
-    <h1>ReelFriends</h1>
+<header>
+            <div class="header">
+            <h2><a href="feed.php">ReelFriends</a></h2>
+            </div>
+        </header>
+
+        <div class="box-container">
+            <div class="side-bar-box">
+            <menu class="sidebar">
+            <form class="search-area" method="post" class="pesquisa-container">
+            <input id="search-area" type="text" name="pesquisa" id="pesquisa" placeholder="Digitar...">
+            <button type="submit" name="pesquisar">Pesquisar</button>
+        </form>
+
+        <?php 
+            if(isset($_POST["pesquisar"])){
+                header("Location: feed.php?query=".$_POST["pesquisa"]);
+            }
+        ?>
+                <p class="categories">Categorias</p>
+                <a href="">Filmes</a>
+                <a href="">Séries</a>
+            </menu>
+            </div>
+
+<main>
 
     <form action="" method="post" enctype="multipart/form-data">
         <fieldset>
-            <h2>Cadastro Produção</h2>
+            <h2>Cadastro Diretor</h2>
         
+            <p>Nome</p>
             <input type="text" name="nome" id="nome" placeholder="Digite nome do diretor..." required>
 
+            <label>Biografia</label>
             <textarea name="biografia" id="biografia" cols="30" rows="10" placeholder="Insira uma pequena biografia para o diretor" required></textarea>
 
             <label for="foto">Insira a foto do perfil do diretor</label>
@@ -61,6 +89,6 @@
 } else {
     header("Location: index.php");
 }
-?>
+?></main>
 </body>
 </html>

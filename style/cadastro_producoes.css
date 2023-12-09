@@ -1,20 +1,93 @@
-body{
+fieldset {
     display: flex;
-    min-height: 100vh;
-    align-items: center;
     flex-direction: column;
+    justify-content: left;
+    border: none;
+    width: 400px;
 }
 
-h1, p{
-    text-align: center;
+fieldset > h2 {
+    margin-top: 10px;
+    font-size: 30px;
+    font-family: 'Darker Grotesque', sans-serif;
+    line-height: 1;
+    margin-bottom: 20px;
 }
 
-form{
-    max-width: 50rem;
-    text-align: center;
+#titulo-prod, label{
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
-input, textarea{
-    display: block;
-    margin: 1rem auto;
+#titulo, #diretores, #dtlancamento, #categoria, #genero, #nome {
+    background-color: #2c2c2c;
+    border: 0px;
+    outline: 1px solid #f4f4f4;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-radius: 4px;
+    padding: 5px;
+    color: #f4f4f4 !important;
+    font-family: 'Inter', sans-serif;
+    height: 30px;
+
+}
+
+#sinopse, #biografia {
+    background-color: #2c2c2c;
+    border: 0px;
+    outline: 1px solid #f4f4f4;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-radius: 4px;
+    padding: 5px;
+    color: #f4f4f4 !important;
+    font-family: 'Inter', sans-serif;
+}
+
+label {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ffffff2f;
+}
+
+label > a {
+    color:#875AE8;
+}
+
+#titulo::placeholder {
+    font-family: 'Inter', sans-serif;
+}
+
+#titulo:focus {
+    outline: 1px solid #875AE8 !important; 
+}
+
+fieldset > input[type="file" i]::before {
+    background-color: #f4f4f4;
+    color:#252525;
+    padding: 10px;
+    position: absolute;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    cursor: pointer; 
+    content: "Upload do computador";
+}
+
+fieldset > input[type="file" i] {
+    font-size: 0px;
+    position: relative;
+    height: 40px;
+}
+
+fieldset > button {
+    margin-top: 5px;
+    background-color: #875AE8;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 5px;
 }

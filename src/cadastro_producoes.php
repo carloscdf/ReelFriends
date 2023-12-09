@@ -11,14 +11,39 @@
     <title>Cadastre uma nova produção</title>
 
     <link rel="stylesheet" href="../style/cadastro_producoes.css">
+    <link rel="stylesheet" href="../style/main.css">
 </head>
 <body>
-    <h1>ReelFriends</h1>
 
-    <form action="" method="post" enctype="multipart/form-data">
+        <header>
+            <div class="header">
+            <h2><a href="feed.php">ReelFriends</a></h2>
+            </div>
+        </header>
+
+        <div class="box-container">
+            <div class="side-bar-box">
+            <menu class="sidebar">
+            <form class="search-area" method="post" class="pesquisa-container">
+            <input id="search-area" type="text" name="pesquisa" id="pesquisa" placeholder="Digitar...">
+            <button type="submit" name="pesquisar">Pesquisar</button>
+        </form>
+
+        <?php 
+            if(isset($_POST["pesquisar"])){
+                header("Location: feed.php?query=".$_POST["pesquisa"]);
+            }
+        ?>
+                <p class="categories">Categorias</p>
+                <a href="">Filmes</a>
+                <a href="">Séries</a>
+            </menu>
+            </div>
+<main>
+<form action="" method="post" enctype="multipart/form-data">
         <fieldset>
             <h2>Cadastro Produção</h2>
-        
+            <p id="titulo-prod">Titulo</p>
             <input type="text" name="titulo" id="titulo" placeholder="Digite o título da produção..." required>
 
             <label for="diretores">Selecione o diretor da produção</label>
@@ -32,10 +57,7 @@
                 ?>
             </select>
 
-            <br>
-            <br>
-
-            <span>O diretor da obra não está cadastrado? Cadastre-o <a href="cadastro_diretores.php">aqui</a></span>
+            <label>O diretor da obra não está cadastrado? Cadastre-o <a href="cadastro_diretores.php">aqui</a></label>
 
             <textarea name="sinopse" id="sinopse" cols="30" rows="10" placeholder="Digite a sinopse da produção" required></textarea>
 
@@ -51,10 +73,6 @@
                     }
                 ?>
             </select>
-
-            <br>
-            <br>
-
             <label for="genero">Selecione o gênero da produção</label>
             <select name="genero" id="genero">
                 <?php // cria uma opção do o select para cada gênero
@@ -64,10 +82,6 @@
                     }
                 ?>
             </select>
-
-            <br>
-            <br>
-
             <label for="capa">Insira a imagem capa da produção</label>
             <input type="file" name="capa" id="capa" required>
 
@@ -111,5 +125,6 @@
     header("Location: index.php");
 }
 ?>
+</main>
 </body>
 </html>
