@@ -1,5 +1,7 @@
 <?php 
-    include("../classes/MySQL.php");
+    session_start();
+    if(isset($_SESSION["usuario"])){
+        include("../classes/MySQL.php");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -33,7 +35,7 @@
             <br>
             <br>
 
-            <span>O diretor da obra não está cadastrado? Cadastre-o <a href="">aqui</a></span>
+            <span>O diretor da obra não está cadastrado? Cadastre-o <a href="cadastro_diretores.php">aqui</a></span>
 
             <textarea name="sinopse" id="sinopse" cols="30" rows="10" placeholder="Digite a sinopse da produção" required></textarea>
 
@@ -83,7 +85,7 @@
                 $arquivo = explode(".", $file["name"]);
 
                 //verifica se o arquivo do upload é do tipo png ou jpg
-                if($arquivo[sizeof($arquivo)-1] != "png" && $arquivo[sizeof($arquivo)-1] != "jpg"){
+                if(strtolower($arquivo[sizeof($arquivo)-1]) != "png" && strtolower($arquivo[sizeof($arquivo)-1]) != "jpg"){
                     die("Você não pode fazer upload desse tipo de arquivo");
                 } else {
                     $dir = "../img/producao/capa/";
@@ -104,5 +106,10 @@
             }
         }
     ?>
+<?php 
+} else {
+    header("Location: index.php");
+}
+?>
 </body>
 </html>

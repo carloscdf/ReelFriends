@@ -56,6 +56,13 @@ if(isset($_SESSION["usuario"])){
             </div>
 
     <main>
+        <menu>
+            <ul>
+                <li><a href="">Filmes</a></li>
+                <li><a href="">Séries</a></li>
+            </ul>
+        </menu>
+
         <section>
             <div class="perfil-banner">
                 <img class = 'foto-banner' src='<?php $usuarioVisitado->getBanner()?>' alt='".$this->username."'>
@@ -111,7 +118,6 @@ if(isset($_SESSION["usuario"])){
                     </div>
             </div>
             
-            <div class="favoritos-box">
             <h2>Favoritos</h2>
             <div class="favoritos">
                 <?php 
@@ -142,7 +148,6 @@ if(isset($_SESSION["usuario"])){
             </div>
             </div>
 
-            <div class="assistidos-box">
             <h2>Assistidos</h2>
             <div class="assistidos">
                 <?php 

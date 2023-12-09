@@ -1,0 +1,60 @@
+body{
+    margin: 0;
+}
+
+nav{
+    border-bottom: solid 1px black;
+    display: flex;
+    height: 10vh;
+}
+
+nav h2 a{
+    color: black;
+    text-decoration: none;
+    display: inline;  
+    padding: 0 1em;  
+}
+
+.pesquisa-container{
+    flex: 1;
+    margin: auto;
+    text-align: center;
+}
+
+nav input{
+    flex: 1;
+}
+
+.perfil{
+    margin: auto;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.foto-perfil{
+    margin: auto 0;
+    max-width: 2.5rem;
+    max-height: 2.5rem;
+    object-fit: cover;
+}
+
+main{
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+form fieldset{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+textarea{
+    resize: none;
+}
