@@ -85,7 +85,7 @@
                 $arquivo = explode(".", $file["name"]);
 
                 //verifica se o arquivo do upload é do tipo png ou jpg
-                if($arquivo[sizeof($arquivo)-1] != "png" && $arquivo[sizeof($arquivo)-1] != "jpg"){
+                if(strtolower($arquivo[sizeof($arquivo)-1]) != "png" && strtolower($arquivo[sizeof($arquivo)-1]) != "jpg"){
                     die("Você não pode fazer upload desse tipo de arquivo");
                 } else {
                     $dir = "../img/producao/capa/";

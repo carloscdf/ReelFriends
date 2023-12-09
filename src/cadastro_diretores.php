@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastre uma novo diretor</title>
 
-    <link rel="stylesheet" href="../style/cadastro_producoes.css">
+    <link rel="stylesheet" href="../style/cadastro_diretores.css">
 </head>
 <body>
     <h1>ReelFriends</h1>
@@ -42,7 +42,7 @@
                 $arquivo = explode(".", $file["name"]);
 
                 //verifica se o arquivo do upload é do tipo png ou jpg
-                if($arquivo[sizeof($arquivo)-1] != "png" && $arquivo[sizeof($arquivo)-1] != "jpg"){
+                if(strtolower($arquivo[sizeof($arquivo)-1]) != "png" && strtolower($arquivo[sizeof($arquivo)-1]) != "jpg"){
                     die("Você não pode fazer upload desse tipo de arquivo");
                 } else {
                     $dir = "../img/diretor_perfil/";

@@ -75,6 +75,24 @@
             }
         }
 
+        function atualizaBioUsuario($idusuario, $novaBiografia){
+            $sql = "UPDATE banco_reelfriends.usuario
+            SET biografia_usuario = :biografia
+            WHERE idusuario = $idusuario";
+
+            $stmt = $this->PDO->prepare($sql);    //prepara
+            $stmt->bindParam(':biografia', $novaBiografia);     //vincula
+            $result = $stmt->execute();    //executa
+
+            if(!$result){
+                var_dump($stmt->errorInfo());
+                    exit;
+                }
+            else{
+                echo "Biografia atualizada!";
+            }
+        }
+
         function pesquisaProducoes(){
             $sql = "SELECT * FROM producao";
             $stmt = $this->PDO->prepare($sql);    //prepara

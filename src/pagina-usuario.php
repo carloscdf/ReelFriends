@@ -103,8 +103,17 @@ if(isset($_SESSION["usuario"])){
                     </div>
                 </div>    
             </div>
+
+            <?php 
+                if($usuario->getBiografia() != null){
+                    echo '<div class="biografia">'; 
+                    echo '<h2 class="topico">Biografia</h2>';
+                    echo $usuario->getBiografia();
+                    echo '</div>';
+                }
+            ?>
             
-            <h2>Favoritos</h2>
+            <h2 class="topico">Favoritos</h2>
             <div class="favoritos">
                 <?php 
                     $rows = $sql->pesquisaFavoritos($usuarioVisitado->getId());
@@ -133,7 +142,7 @@ if(isset($_SESSION["usuario"])){
                 ?>
             </div>
 
-            <h2>Assistidos</h2>
+            <h2 class="topico">Assistidos</h2>
             <div class="assistidos">
                 <?php 
                     $rows = $sql->pesquisaAssistidos($usuarioVisitado->getId());

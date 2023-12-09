@@ -4,6 +4,7 @@
         private $email;
         private $perfil;
         private $banner;
+        private $biografia;
         private $id;
 
         function __construct($email)
@@ -19,6 +20,8 @@
             $this->perfil = "../img/usuario/perfil/".$rows["nome_usuario"]."-".$rows["idusuario"].".png";
 
             $this->banner = "../img/usuario/banner/".$rows["nome_usuario"]."-".$rows["idusuario"].".png";
+
+            $this->biografia = $rows["biografia_usuario"];
 
             $this->id = $rows["idusuario"];
         }
@@ -49,6 +52,10 @@
             else{
                 echo $this->banner;
             }
+        }
+
+        function getBiografia(){
+            return $this->biografia;
         }
 
         function getId(){

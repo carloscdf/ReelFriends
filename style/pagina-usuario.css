@@ -63,6 +63,8 @@ section{
 
 .foto-banner{
     width: 85vw;
+    height: 14.5rem;
+    object-fit: cover;
 }
 
 .user-info{
@@ -147,6 +149,10 @@ table, td, th{
     background-color: #cfcca8;
     color: #000000;
     border-radius: 3px;
+}
+
+.topico{
+    margin-bottom: 0;
 }
 
 .favoritos{
